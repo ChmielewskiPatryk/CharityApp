@@ -1,7 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-
 <!DOCTYPE html>
 <html lang="pl">
 <%@include file="header.jsp" %>
@@ -102,39 +100,37 @@
         <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy.
             Możesz sprawdzić czym się zajmują.</p>
         <div class="help--slides-pagination">
-        <ul class="help--slides-items">
-            <li>
-                <c:forEach items="${institutions}" var="institution" varStatus="status">
-                    <c:if test="${status.count %2 != 0}">
-                        <br>
-                        <div class="col">
-                            <div class="title">${institution.name}</div>
-                            <div class="subtitle">Cel i misja: ${institution.description}.</div>
-                        </div>
-                    </c:if>
-                </c:forEach>
-            </li>
+            <ul class="help--slides-items">
+                <li>
+                    <c:forEach items="${institutions}" var="institution" varStatus="status">
+                        <c:if test="${status.count %2 != 0}">
+                            <br>
+                            <div class="col">
+                                <div class="title">${institution.name}</div>
+                                <div class="subtitle">Cel i misja: ${institution.description}.</div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </li>
 
-            <li>
-                <c:forEach items="${institutions}" var="institution" varStatus="status">
-                    <c:if test="${status.count %2 == 0}">
-                        <br>
-                        <div class="col">
-                            <div class="title">${institution.name}</div>
-                            <div class="subtitle">Cel i misja: ${institution.description}.</div>
-                        </div>
-                    </c:if>
-                </c:forEach>
-
-
-            </li>
-
-        </ul>
+                <li>
+                    <c:forEach items="${institutions}" var="institution" varStatus="status">
+                        <c:if test="${status.count %2 == 0}">
+                            <br>
+                            <div class="col">
+                                <div class="title">${institution.name}</div>
+                                <div class="subtitle">Cel i misja: ${institution.description}.</div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
 
 
-    </div>
-        <button type="button" class="btn prev-step">&#x3C;</button>
-        <button type="button" class="btn next-step">&#x3E;</button>
+                </li>
+
+            </ul>
+
+        </div>
+
     </div>
 
 </section>

@@ -3,9 +3,12 @@ package pl.coderslab.charity.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.charity.entity.Category;
 import pl.coderslab.charity.entity.Institution;
+import pl.coderslab.charity.model.DonationModel;
 import pl.coderslab.charity.service.CategoryService;
+import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
 
 import java.util.List;
@@ -15,10 +18,12 @@ public class DonationController {
 
     private final CategoryService categoryService;
     private final InstitutionService institutionService;
+    private final DonationService donationService;
 
-    public DonationController(CategoryService categoryService, InstitutionService institutionService) {
+    public DonationController(CategoryService categoryService, InstitutionService institutionService,DonationService donationService) {
         this.categoryService = categoryService;
         this.institutionService = institutionService;
+        this.donationService = donationService;
     }
 
     @GetMapping("/donate")
@@ -26,6 +31,12 @@ public class DonationController {
         return "donationForm";
     }
 
+    @PostMapping("/donate")
+    public String donationFormProcess(@ModelAttribute DonationModel donationModel){
+
+        donationService.save(donationModel.toDonationEntity());
+        return "donationConfirmed";
+    }
     @ModelAttribute("categories")
     List<Category> categoryList(){
         return categoryService.getAllCategories();
@@ -35,4 +46,10 @@ public class DonationController {
     List<Institution> institutionsList(){
         return institutionService.getAllInstitutions();
     }
-}
+
+    @ModelAttribute("donation")
+        DonationModel donation(){
+            return new DonationModel();
+        }
+    }
+

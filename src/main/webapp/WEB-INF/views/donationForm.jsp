@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fomr" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="pl">
@@ -77,30 +78,25 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-        <form action="form-confirmation.html" method="post">
+        <form:form modelAttribute="donation" action="donate" method="post">
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
 
 
                 <c:forEach items="${categories}" var="categories">
+
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input
-                                    type="checkbox"
-                                    name="categories"
-                                    value="${categories.name}"
-                            />
+                            <form:checkbox path="categories" value="${categories.id}"/>
                             <span class="checkbox"></span>
-                            <span class="description"
-                            >${categories.name}</span
-                            >
+                            <span class="description">${categories.name}</span>
                         </label>
                     </div>
                 </c:forEach>
 
                 <div class="form-group form-group--buttons">
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button type="button" id="button1"class="btn next-step">Dalej</button>
                 </div>
             </div>
 
@@ -111,7 +107,7 @@
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <input type="number" name="bags" step="1" min="1"/>
+                        <form:input path="quantity" type="number"  step="1" min="1"></form:input>
                     </label>
                 </div>
 
@@ -128,7 +124,8 @@
                 <c:forEach items="${institutions}" var="institutions">
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input type="radio" name="organization" value="${institutions}"/>
+                            <form:radiobutton path="institution" name="institution" value = "${institutions.id}"  ></form:radiobutton>
+       <%--                     <input type="radio" name="organization" value="${institutions.name}"/>--%>
                             <span class="checkbox radio"></span>
                             <span class="description">
                   <div class="title">${institutions.name}</div>
@@ -138,12 +135,13 @@
                 </span>
                         </label>
                     </div>
+
                 </c:forEach>
 
 
                 <div class="form-group form-group--buttons">
-                    <button type="button" class="btn prev-step">Wstecz</button>
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button type="button"  class="btn prev-step">Wstecz</button>
+                    <button type="button" id="button4" class="btn next-step">Dalej</button>
                 </div>
             </div>
 
@@ -155,22 +153,22 @@
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Ulica <input type="text" name="address"/> </label>
+                            <label> Ulica <form:input path="street" type="text" name="address"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Miasto <input type="text" name="city"/> </label>
+                            <label> Miasto <form:input path="city" type="text" name="city"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Kod pocztowy <input type="text" name="postcode"/>
+                                Kod pocztowy <form:input path="zipCode" type="text" name="postcode"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Numer telefonu <input type="phone" name="phone"/>
+                                Numer telefonu <form:input path="phone" type="phone" name="phone"/>
                             </label>
                         </div>
                     </div>
@@ -178,24 +176,24 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Data <input type="date" name="data"/> </label>
+                            <label> Data <form:input path="pickUpDate" type="date" name="data"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Godzina <input type="time" name="time"/> </label>
+                            <label> Godzina <form:input path="pickUpTime" type="time" name="time"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
                                 Uwagi dla kuriera
-                                <textarea name="more_info" rows="5"></textarea>
+                                <form:textarea path="pickUpComment" name="more_info" rows="5"></form:textarea>
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button id="finishButton" type="button" class="btn next-step">Dalej</button>
                 </div>
             </div>
 
@@ -209,15 +207,13 @@
                         <ul>
                             <li>
                                 <span class="icon icon-bag"></span>
-                                <span class="summary--text"
-                                >4 worki ubrań w dobrym stanie dla dzieci</span
-                                >
+                                <span class="summary--text"><span id="confirmedBags"></span> worki</span>
+
                             </li>
 
                             <li>
                                 <span class="icon icon-hand"></span>
-                                <span class="summary--text"
-                                >Dla fundacji "Mam marzenie" w Warszawie</span
+                                <span class="summary--text" id="confirmedOrganization"></span
                                 >
                             </li>
                         </ul>
@@ -227,19 +223,19 @@
                         <div class="form-section--column">
                             <h4>Adres odbioru:</h4>
                             <ul>
-                                <li>Prosta 51</li>
-                                <li>Warszawa</li>
-                                <li>99-098</li>
-                                <li>123 456 789</li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
                             </ul>
                         </div>
 
                         <div class="form-section--column">
                             <h4>Termin odbioru:</h4>
                             <ul>
-                                <li>13/12/2018</li>
-                                <li>15:40</li>
-                                <li>Brak uwag</li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
                             </ul>
                         </div>
                     </div>
@@ -250,12 +246,16 @@
                     <button type="submit" class="btn">Potwierdzam</button>
                 </div>
             </div>
-        </form>
+        </form:form>
     </div>
+    <script>
+
+    </script>
 </section>
 
 <%@include file="footer.jsp" %>
-<script src="js/app.js"></script>
-<script src="js/donationFormApp.js"></script>
+<script src="<c:url value="/resources/js/app.js"/>"></script>
+<script src="<c:url value="/resources/js/donationFormApp.js"/>"></script>
+<script src="<c:url value="/resources/js/ValidateForm.js"/>"></script>
 </body>
 </html>

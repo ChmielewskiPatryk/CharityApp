@@ -3,6 +3,7 @@ package pl.coderslab.charity.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.repository.DonationRepository;
 
 @Service
@@ -21,5 +22,9 @@ public class DonationService {
 
     public Long getAllDonations(){
         return donationRepository.count();
+    }
+
+    public void save(Donation donation){
+        donationRepository.save(donation);
     }
 }
