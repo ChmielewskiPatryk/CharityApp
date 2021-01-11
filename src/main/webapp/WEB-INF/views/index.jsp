@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="pl">
 <%@include file="header.jsp" %>
@@ -7,12 +9,25 @@
 <header class="header--main-page">
     <nav class="container container--70">
         <ul class="nav--actions">
-            <li><a href="/about" class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="/register" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+<sec:authorize access="!isAuthenticated()">
+    <li><a href="<c:url value = "/login"/>" class="btn btn--small btn--without-border">Zaloguj</a></li>
+    <li><a href="<c:url value = "/registration"/>" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+</sec:authorize>
+            <sec:authorize access="isAuthenticated()" >
+                <sec:authentication var="principal" property="principal" />
+                <div><h1>Witaj! ${principal.username}</h1></div><br>
+                <sec:authorize access="hasAuthority('ADMIN')">
+                    <div><a href="<c:url value = "/admin"/>" class="btn btn--normal btn--without-border">Panel administratora</a></div>
+                </sec:authorize>
+         <form:form action="/logout" method="post">
+             <button class="btn btn--normal btn--without-border" type="submit">Wyloguj się</button>
+         </form:form>
+            </sec:authorize>
+
         </ul>
 
         <ul>
-            <li><a href="/" class="btn btn--without-border active">Start</a></li>
+            <li><a href="/" class="btn btn--without-border ">Start</a></li>
             <li><a href="/#steps" class="btn btn--without-border" id="stepsScroll">O co chodzi?</a></li>
             <li><a href="/#about-us" class="btn btn--without-border" id="aboutScroll">O nas</a></li>
             <li><a href="/#help" class="btn btn--without-border" id="helpScroll">Fundacje i organizacje</a></li>
@@ -78,7 +93,7 @@
         </div>
     </div>
 
-    <a href="/register" class="btn btn--large">Załóż konto</a>
+    <li><a href="<c:url value = "/registration"/>" class="btn btn--small btn--highlighted">Załóż konto</a></li>
 </section>
 
 <section class="about-us">

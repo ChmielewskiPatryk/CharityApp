@@ -492,6 +492,10 @@ h2:after {
   font-size: 1.3rem;
   padding: 0.5em 0.6em;
 }
+.btn--normal {
+  font-size: 2.3rem;
+  padding: 0.5em 1.0em;
+}
 
 /* line 29, scss/modules/_buttons.scss */
 .btn--without-border {

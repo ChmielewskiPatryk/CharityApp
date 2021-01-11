@@ -23,7 +23,7 @@ public class HomeController {
         this.donationService = donationService;
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String homeAction() {
         return "index";
     }

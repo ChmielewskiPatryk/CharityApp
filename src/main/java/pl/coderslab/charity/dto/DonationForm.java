@@ -1,4 +1,4 @@
-package pl.coderslab.charity.model;
+package pl.coderslab.charity.dto;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Data
-public class DonationModel {
+public class DonationForm {
 
     private  int quantity;
     private  List<Category> categories;
@@ -24,7 +24,7 @@ public class DonationModel {
     private  String pickUpComment;
     private  String phone;
 
-    public DonationModel() {
+    public DonationForm() {
     }
     public Donation toDonationEntity( ){
 

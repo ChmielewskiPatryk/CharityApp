@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.charity.entity.Category;
 import pl.coderslab.charity.entity.Institution;
-import pl.coderslab.charity.model.DonationModel;
+import pl.coderslab.charity.dto.DonationForm;
 import pl.coderslab.charity.service.CategoryService;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
@@ -32,7 +32,7 @@ public class DonationController {
     }
 
     @PostMapping("/donate")
-    public String donationFormProcess(@ModelAttribute DonationModel donationModel){
+    public String donationFormProcess(@ModelAttribute DonationForm donationModel){
 
         donationService.save(donationModel.toDonationEntity());
         return "donationConfirmed";
@@ -48,8 +48,8 @@ public class DonationController {
     }
 
     @ModelAttribute("donation")
-        DonationModel donation(){
-            return new DonationModel();
+    DonationForm donation(){
+            return new DonationForm();
         }
     }
 

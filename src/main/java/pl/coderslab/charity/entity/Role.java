@@ -5,16 +5,15 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@Table(name ="categories")
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Category {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     @Setter(AccessLevel.NONE)
-    private  Long id;
-    private  String name;
-
-
+    private Long id;
+    private String role;
 }
