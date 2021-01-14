@@ -1,6 +1,8 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import pl.coderslab.charity.service.CategoryService;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -32,10 +35,17 @@ public class DonationController {
     }
 
     @PostMapping("/donate")
-    public String donationFormProcess(@ModelAttribute DonationForm donationModel){
+    public String donationFormProcess(@Valid @ModelAttribute("donation") DonationForm donationModel, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("donation", donationModel);
+            model.addAttribute("formError", "Twój formularz zawiera błędy");
+            return "donationForm";
+        } else {
+            donationService.save(donationModel.toDonationEntity());
+            return "donationConfirmed";
+        }
 
-        donationService.save(donationModel.toDonationEntity());
-        return "donationConfirmed";
+
     }
     @ModelAttribute("categories")
     List<Category> categoryList(){
