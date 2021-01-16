@@ -219,7 +219,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 let phoneNumber = this.$form.querySelector("#phone").value;
                 let pickUpDate = this.$form.querySelector("#pickUpDate").value;
                 let pickUpTime = this.$form.querySelector("#pickUpTime").value;
-                let pickUpComment = this.$form.querySelector("#pickUpComment").value;
                 const regExpZipCode = new RegExp("^[0-9]{2}-[0-9]{3}");
                 const regExpDate = new RegExp("^2\\d{3}-[0-2]\\d-[0-3]\\d");
                 const regExpTime = new RegExp("^([01]?\\d|2[0-3]):[0-5]\\d");
@@ -230,7 +229,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 let pickUpDateLabel = this.$form.querySelector("#pickUpDateLabel");
                 let pickUpTimeLabel = this.$form.querySelector("#pickUpTimeLabel");
 
-                let flag = true;
 
                 function testStreet() {
                     if (street.length === 0) {

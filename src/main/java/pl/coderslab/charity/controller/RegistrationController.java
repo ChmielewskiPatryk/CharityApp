@@ -18,37 +18,39 @@ import javax.validation.Valid;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    private UserService userService;
 
+    private final UserService userService;
+
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/registration")
-    public String registrationForm(){
+    public String registrationForm() {
         return "register";
     }
 
     @PostMapping("/registration")
-    public String register(@Valid @ModelAttribute RegisterForm registerForm, BindingResult bindingResult,Model model){
-        User userEmail = userService.findUserByEmail(registerForm.getEmail());//existbyEmail
-        if(userEmail !=null){
-            bindingResult.rejectValue("email","error.user", "Konto o podanym adresie już istnieje");
+    public String register(@Valid RegisterForm registerForm, BindingResult bindingResult) {
+        boolean userEmail = userService.existsByEmail(registerForm.getEmail());
+        if (userEmail) {
+            bindingResult.rejectValue("email", "error.user", "Konto o podanym adresie już istnieje");
         }
-        if(!registerForm.getPassword().equals(registerForm.getRetypePassword())){
-            bindingResult.rejectValue("retypePassword", "error.user","Podane hasła nie są identyczne");
+        if (!registerForm.getPassword().equals(registerForm.getRetypePassword())) {
+            bindingResult.rejectValue("retypePassword", "error.user", "Podane hasła nie są identyczne");
         }
-        if(bindingResult.hasErrors()){
-            model.addAttribute("user", registerForm);
+        if (bindingResult.hasErrors()) {
+
             return "register";
-        }else {
-            userService.save(registerForm.toUser());
-            return "registrationSucces";
         }
+        userService.save(registerForm.toUser());
+        return "registrationSucces"; // przekierować na główną stronę
 
 
     }
 
     @ModelAttribute
-    public RegisterForm registerForm(){
+    public RegisterForm registerForm() {
         return new RegisterForm();
     }
 }

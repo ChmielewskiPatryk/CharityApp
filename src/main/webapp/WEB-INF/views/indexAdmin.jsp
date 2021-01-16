@@ -42,7 +42,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" a href="<c:url value = "/editInstitutions"/>" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" a href="<c:url value = "/institutions"/>" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>Fundacje
                 </a>

@@ -31,16 +31,15 @@ public class SpringUserDetailService implements UserDetailsService {
         return buildUserForAuthentication(user, authorities);
     }
 
-    private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles){
+    private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
         Set<GrantedAuthority> roles = new HashSet<>();
-        for(Role role : userRoles){
+        for (Role role : userRoles) {
             roles.add(new SimpleGrantedAuthority(role.getRole()));
         }
         return new ArrayList<>(roles);
     }
 
     private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, authorities
-        );
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, authorities);
     }
 }
