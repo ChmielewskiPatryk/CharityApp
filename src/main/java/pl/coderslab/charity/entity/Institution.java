@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Table(name = "institutions")
 @Entity
 public class Institution {
@@ -17,7 +16,11 @@ public class Institution {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private  Long id;
-    private final   String name;
-    private final  String description;
+    private  String name;
+    private  String description;
 
+    public Institution(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

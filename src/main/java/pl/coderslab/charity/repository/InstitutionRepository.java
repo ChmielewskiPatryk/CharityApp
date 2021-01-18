@@ -10,4 +10,6 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
 
     void deleteById(Long id);
 
+    Institution getInstitutionById(Long id);
+
 }

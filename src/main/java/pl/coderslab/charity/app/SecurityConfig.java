@@ -17,7 +17,10 @@ import pl.coderslab.charity.service.SpringUserDetailService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private SpringUserDetailService springUserDetailService;
+    private  SpringUserDetailService springUserDetailService;
+    @Autowired
+    private UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
+
 
     @Bean
     public PasswordEncoder encoder() {
@@ -36,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/donate").hasAuthority("USER")
+                .antMatchers("/donate").hasAuthority("ADMIN")
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/home").permitAll()
                 .antMatchers("/").permitAll()
@@ -43,9 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().successHandler(userAuthenticationSuccessHandler)
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()

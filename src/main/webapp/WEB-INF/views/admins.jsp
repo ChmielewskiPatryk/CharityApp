@@ -166,12 +166,12 @@
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <h2>Instytucje</h2>
+                                        <h2>Administratorzy</h2>
                                     </div>
                                     <div class="col-xs-6">
                                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
                                                 class="material-icons">&#xE147;</i>
-                                            <span>Dodaj nową instytucję</span></a>
+                                            <span>Dodaj nowego administartora</span></a>
 
                                     </div>
                                 </div>
@@ -184,29 +184,32 @@
 
 								</span>
                                     </th>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Email</th>
+                                    <th>Dostęp</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${institutiions}" var="institution">
+                                <c:forEach items="${admins}" var="admins">
                                     <tr>
                                         <td>
 
                                         </td>
-                                        <td>${institution.name}</td>
-                                        <td>${institution.description}</td>
+                                        <td>${admins.name}</td>
+                                        <td>${admins.lastName}</td>
+                                        <td>${admins.email}</td>
+                                        <td>${admins.role}</td>
 
                                         <td>
 
-                                            <a href="<c:url value ="/editInstitution?id=${institution.id}"/>"
+                                            <a href="<c:url value ="/editAdmin?id=${admins.id}"/>"
                                                class="edit"
                                                data-toggle="modal"><i
                                                     class="material-icons" data-toggle="tooltip"
                                                     title="Edit">&#xE254;</i></a>
-                                            <a href="<c:url value ="/deleteInstitution/${institution.id}"/>"
-                                               data-institution-id="${institution.id}"
+                                            <a href="<c:url value ="/deleteAdmin/${admins.id}"/>"
                                                class="delete" data-toggle="modal"><i
                                                     class="material-icons" data-toggle="tooltip"
                                                     title="Delete">&#xE872;</i></a>
@@ -223,28 +226,40 @@
                 <div id="addEmployeeModal" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form:form modelAttribute="institutionForm" action="institutions" method="post">
+                            <form:form modelAttribute="registerForm" action="admins" method="post">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Dodaj instytucje</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                        &times;
-                                    </button>
+                                    <h4 class="modal-title">Dodaj nowego administratora</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label>Nazwa</label>
-                                        <form:input path="name" type="text" class="form-control"/>
+                                        <label>Imię</label>
+                                        <form:input path="firstName" type="text" class="form-control"/>
                                         <label id="nameLabel" style="color:red"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label>Opis</label>
-                                        <form:input path="description" type="text" class="form-control"/>
-                                        <label id="descriptionLabel" style="color:red"></label>
+                                        <label>Nazwisko</label>
+                                        <form:input path="lastName" type="text" class="form-control"/>
+                                        <label id="lastNameLabel" style="color:red"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <form:input path="email" type="text" class="form-control"/>
+                                        <label id="emailLabel" style="color:red"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Hasło</label>
+                                        <form:input path="password" type="password" class="form-control"/>
+                                        <label id="passwordLabel" style="color:red"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Powtórz hasło</label>
+                                        <input path="retypePassword" name="retypePassword" type="password" class="form-control"/>
+                                        <label id="retypePasswordLabel" style="color:red"></label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input id="addInstitution" type="submit" class="btn btn-success" value="Add">
+                                    <input id="addAdmin" type="submit" class="btn btn-success" value="Add">
                                 </div>
                             </form:form>
                         </div>
@@ -255,6 +270,7 @@
     </div>
 </div>
 </body>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
@@ -270,7 +286,6 @@
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="<c:url value ="/resources/js/InstitutionsEdit.js"/>"></script>
-
+<script src="<c:url value ="/resources/js/AdminsEdit.js"/>"></script>
 
 </html>

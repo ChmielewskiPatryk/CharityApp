@@ -25,4 +25,8 @@ public class InstitutionService {
     public void delete(Long id){
         institutionRepository.deleteById(id);
     }
+
+    public Institution getInstitutionById(Long id) {
+        return institutionRepository.getInstitutionById(id);
+    }
 }

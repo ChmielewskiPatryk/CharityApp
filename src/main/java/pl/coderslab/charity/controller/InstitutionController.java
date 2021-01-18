@@ -11,17 +11,16 @@ import pl.coderslab.charity.dto.InstitutionForm;
 import pl.coderslab.charity.entity.Institution;
 import pl.coderslab.charity.service.InstitutionService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class InstitutionController {
 
-    @ModelAttribute
-    public InstitutionForm institutionForm(){
-        return new InstitutionForm();
-    }
+
     private final InstitutionService institutionService;
+
 
     public InstitutionController(InstitutionService institutionService) {
         this.institutionService = institutionService;
@@ -35,7 +34,7 @@ public class InstitutionController {
     }
 
     @PostMapping("/institutions")
-    public String addInstitution(@Valid  InstitutionForm institutionForm, BindingResult bindingResult,Model model) {
+    public String addInstitution(@Valid  InstitutionForm institutionForm, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             institutionService.save(institutionForm.toInstitution(institutionForm));
         }
@@ -46,6 +45,30 @@ public class InstitutionController {
     public String deleteInstitution(@PathVariable String id){
         institutionService.delete(Long.parseLong(id));
         return "redirect:/institutions";
+    }
+    @GetMapping("/editInstitution")
+    public String editInstitution(HttpServletRequest request,Model model) {
+        String id = request.getParameter("id");
+        Institution institution = institutionService.getInstitutionById(Long.parseLong(id));
+        model.addAttribute("institutionToEdit", institution);
+        return "EditInstitutionData";
+    }
+
+
+    @PostMapping("/editInstitution")
+    public String updateInstitution(InstitutionForm institutionForm,BindingResult bindingResult){
+
+        Institution updateInstitution = institutionService.getInstitutionById(Long.parseLong(institutionForm.getId()));
+        updateInstitution.setName(institutionForm.getName());
+        updateInstitution.setDescription(institutionForm.getDescription());
+        institutionService.save(updateInstitution);
+        return "redirect:/institutions";
+
+    }
+
+    @ModelAttribute
+    public InstitutionForm institutionForm(){
+        return new InstitutionForm();
     }
 
 }

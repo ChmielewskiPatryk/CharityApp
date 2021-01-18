@@ -17,7 +17,7 @@
                 <sec:authentication var="principal" property="principal" />
                 <div><h3>Witaj! ${principal.username}</h3></div><br>
                 <sec:authorize access="hasAuthority('ADMIN')">
-                    <div><h3><a href="<c:url value = "/admin"/>" class="btn btn--normal btn--without-border">Panel administratora</a></h3></div>
+                    <div><h3><a href="<c:url value = "/admin"/>" >Panel administratora</a></h3></div>
                 </sec:authorize>
          <form:form action="/logout" method="post">
              <button class="btn btn--normal btn--without-border" type="submit">Wyloguj się</button>

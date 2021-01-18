@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class InstitutionForm {
 
+    private String id;
     @NotEmpty(message ="Podaj nazwę fundacji")
     private String name;
     @NotEmpty(message ="Podaj opis fundacji")
@@ -19,6 +20,6 @@ public class InstitutionForm {
     }
 
     public Institution toInstitution(InstitutionForm institutionForm){
-        return new Institution(institutionForm.name, institutionForm.description);
+        return new Institution(institutionForm.name,institutionForm.description);
     }
 }

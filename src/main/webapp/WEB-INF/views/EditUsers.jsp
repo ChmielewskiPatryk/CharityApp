@@ -166,14 +166,9 @@
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <h2>Instytucje</h2>
+                                        <h2>Użytkownicy</h2>
                                     </div>
-                                    <div class="col-xs-6">
-                                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
-                                                class="material-icons">&#xE147;</i>
-                                            <span>Dodaj nową instytucję</span></a>
 
-                                    </div>
                                 </div>
                             </div>
                             <table class="table table-striped table-hover">
@@ -184,29 +179,32 @@
 
 								</span>
                                     </th>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Email</th>
+                                    <th>Dostęp</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${institutiions}" var="institution">
+                                <c:forEach items="${users}" var="users">
                                     <tr>
                                         <td>
 
                                         </td>
-                                        <td>${institution.name}</td>
-                                        <td>${institution.description}</td>
+                                        <td>${users.name}</td>
+                                        <td>${users.lastName}</td>
+                                        <td>${users.email}</td>
+                                        <td>${users.role}</td>
 
                                         <td>
 
-                                            <a href="<c:url value ="/editInstitution?id=${institution.id}"/>"
+                                            <a href="<c:url value ="/editUser?id=${users.id}"/>"
                                                class="edit"
                                                data-toggle="modal"><i
                                                     class="material-icons" data-toggle="tooltip"
                                                     title="Edit">&#xE254;</i></a>
-                                            <a href="<c:url value ="/deleteInstitution/${institution.id}"/>"
-                                               data-institution-id="${institution.id}"
+                                            <a href="<c:url value ="/deleteUser/${users.id}"/>"
                                                class="delete" data-toggle="modal"><i
                                                     class="material-icons" data-toggle="tooltip"
                                                     title="Delete">&#xE872;</i></a>
@@ -219,42 +217,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- Edit Modal HTML -->
-                <div id="addEmployeeModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form:form modelAttribute="institutionForm" action="institutions" method="post">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Dodaj instytucje</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                        &times;
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label>Nazwa</label>
-                                        <form:input path="name" type="text" class="form-control"/>
-                                        <label id="nameLabel" style="color:red"></label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Opis</label>
-                                        <form:input path="description" type="text" class="form-control"/>
-                                        <label id="descriptionLabel" style="color:red"></label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input id="addInstitution" type="submit" class="btn btn-success" value="Add">
-                                </div>
-                            </form:form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
@@ -271,6 +239,6 @@
 
 <!-- Custom scripts for all pages-->
 <script src="<c:url value ="/resources/js/InstitutionsEdit.js"/>"></script>
-
+<script src="<c:url value ="/resources/js/AdminsEdit.js"/>"></script>
 
 </html>
